@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  dockerdemo.api:
+    image: ${DOCKER_REGISTRY-}dockerdemoapi
+    container_name: dockerdemo.api
+    build:
+      context: .
+      dockerfile: DockerDemo.API/Dockerfile
+
+
+  dockerdemo.database:
+    image: postgres:latest
+    container_name: dockerdemo.database
+    environment:
+        - POSTGRES_DB=dockerdemo
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+    volumes:
+        - ./.containers/dockerdemo-db:/var/lib/postgresql/data
+    ports:
+        - 5432:5432    
+    
+  
